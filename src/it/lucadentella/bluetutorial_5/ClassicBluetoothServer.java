@@ -75,7 +75,7 @@ public class ClassicBluetoothServer extends Activity {
 	private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
 	private boolean pendingPublishReauthorization = false;
 	private Session.StatusCallback statusCallback = new SessionStatusCallback();
-	
+	private Button btn;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,7 +86,8 @@ public class ClassicBluetoothServer extends Activity {
 		post = (Button) findViewById(R.id.post);
 		tx=(TextView)findViewById(R.id.textView);
 		iv=(ImageView)findViewById(R.id.imageView1);
-		
+		btn=(Button)findViewById(R.id.hahaha);
+		btn.setOnClickListener(listener);
 		login.setOnClickListener(listener);
 		logout.setOnClickListener(listener);
 		post.setOnClickListener(listener);
@@ -151,6 +152,14 @@ public class ClassicBluetoothServer extends Activity {
 				break;
 			case R.id.post:
 				publishStory();
+				break;
+			case R.id.hahaha:
+				try {
+					mServerSocket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
@@ -343,9 +352,20 @@ public class ClassicBluetoothServer extends Activity {
 		}
 		return true;
 	}
-
+	private BluetoothServerSocket mServerSocket;
+/*	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		try {
+			mServerSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	} */
 	private class AcceptThread extends Thread {
-		private BluetoothServerSocket mServerSocket;
+	//	private BluetoothServerSocket mServerSocket;
 
 		public AcceptThread() {
 			try {
@@ -387,12 +407,12 @@ public class ClassicBluetoothServer extends Activity {
 					// Do work in a separate thread
 					new ConnectedThread(socket, mHandler).start();
 					Log.d(TAG, "connectedThread is called");
-					try {
+				/*	try {
 						mServerSocket.close();
 					} catch (IOException e) {
 						Log.v(TAG, e.getMessage());
-					}
-					break;
+					}*/
+					//break;
 				}
 			}
 		}
@@ -481,8 +501,8 @@ public class ClassicBluetoothServer extends Activity {
 					public void run() {
 						iv.setImageBitmap(bm);
 						tx.setText(c.toString());
-						Log.d(TAG, "set bitmap");
-						publishStory();
+						Log.d(TAG, "set string:"+c.toString()+" bitmap:"+bm);
+					//	publishStory();
 					}
 				});
 				try {

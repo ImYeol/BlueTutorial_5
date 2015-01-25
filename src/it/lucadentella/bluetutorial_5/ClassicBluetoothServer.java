@@ -491,6 +491,7 @@ public class ClassicBluetoothServer extends Activity {
 				Log.d(TAG, "error to get img");
 				e.printStackTrace();
 			}
+			IsPicture=false;
 				final Bitmap bm = BitmapFactory.decodeByteArray(
 						receivedImage.toByteArray(), 0,
 						receivedImage.toByteArray().length);
@@ -502,7 +503,7 @@ public class ClassicBluetoothServer extends Activity {
 						iv.setImageBitmap(bm);
 						tx.setText(c.toString());
 						Log.d(TAG, "set string:"+c.toString()+" bitmap:"+bm);
-					//	publishStory();
+						publishStory();
 					}
 				});
 				try {
